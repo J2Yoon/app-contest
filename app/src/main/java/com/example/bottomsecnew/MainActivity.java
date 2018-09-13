@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
             onMenuItemClick(item);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    mTextMessage.setText("메인");
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    mTextMessage.setText("맞춤복지");
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    mTextMessage.setText("카테고리");
                     return true;
                 case R.id.navigation_search:
-                    mTextMessage.setText("Login");
+                    mTextMessage.setText("로그인");
                     return true;
             }
             return false;
