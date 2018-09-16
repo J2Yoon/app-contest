@@ -8,23 +8,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
+public class bottomtle extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     MenuItem item1, item2, item3, item4;
     private TextView mTextMessage;
-
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         if (menuItem.getItemId() == R.id.navigation_home) {
             Intent intent = new Intent(this, actionbar_n_tabbar01.class);
             startActivity(intent);
-            //finish();
             return true;
         }
         if (menuItem.getItemId() == R.id.navigation_search) {
             Intent intent = new Intent(this, signin.class);
             startActivity(intent);
-        //    finish();
             return true;
         }
         return false;

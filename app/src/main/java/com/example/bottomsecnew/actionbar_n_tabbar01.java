@@ -1,12 +1,16 @@
 package com.example.bottomsecnew;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -60,6 +64,52 @@ public class actionbar_n_tabbar01 extends AppCompatActivity {
         CustomFragmentPagerAdapter adapter = new CustomFragmentPagerAdapter(fm, fList);
         mViewPager.setAdapter(adapter);
 
+        bottomtle navigat=new bottomtle();
+        BottomNavigationView bnavi=(BottomNavigationView)findViewById(R.id.navigation);
+        bnavi.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(bnavi);
+
+    }
+
+    public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            onMenuItemClick(item);
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_dashboard:
+                    // mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
+                    // mTextMessage.setText(R.string.title_notifications);
+                    return true;
+                case R.id.navigation_search:
+                    // mTextMessage.setText("Login");
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    //@Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.navigation_home) {
+            Intent intent = new Intent(this, actionbar_n_tabbar01.class);
+            startActivity(intent);
+            //  finish();
+            return true;
+        }
+        if (menuItem.getItemId() == R.id.navigation_search) {
+            Intent intent = new Intent(this, signin.class);
+            startActivity(intent);
+            //    finish();
+            return true;
+        }
+        return false;
     }
 
     ViewPager.SimpleOnPageChangeListener viewPagerListener = new ViewPager.SimpleOnPageChangeListener(){

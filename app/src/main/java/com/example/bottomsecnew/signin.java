@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -40,7 +43,7 @@ import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
 
 
-public class signin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class signin extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, MenuItem.OnMenuItemClickListener{
     private static final int RC_SIGN_IN = 10;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
@@ -53,6 +56,8 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
     OAuthLoginButton mOAuthLoginButton;
     private String mCustomToken;
     private Context context;
+    private MenuItem mitem;
+
     //private TokenBroadcastReceiver mTokenReceiver;
 
 
@@ -60,9 +65,10 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
+
         mAuth=FirebaseAuth.getInstance();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
@@ -121,7 +127,13 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
                 mOAuthLoginModule.startOauthLoginActivity(signin.this,mOAuthLoginHandler);
             }
         });
+        //탭
+        bottomtle navigat=new bottomtle();
+        BottomNavigationView bnavi=(BottomNavigationView)findViewById(R.id.navigation);
+          bnavi.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(bnavi);
 
+        //
 
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.facebook_login_button);
@@ -145,7 +157,33 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
                 // ...
             }
         });
+
+
     }
+
+    public BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            onMenuItemClick(item);
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    //mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_dashboard:
+                   // mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
+                   // mTextMessage.setText(R.string.title_notifications);
+                    return true;
+                case R.id.navigation_search:
+                   // mTextMessage.setText("Login");
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void handleFacebookAccessToken(AccessToken token) {
      //   Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -327,5 +365,22 @@ public class signin extends AppCompatActivity implements GoogleApiClient.OnConne
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.navigation_home) {
+            Intent intent = new Intent(this, actionbar_n_tabbar01.class);
+            startActivity(intent);
+          //  finish();
+            return true;
+        }
+        if (menuItem.getItemId() == R.id.navigation_search) {
+            Intent intent = new Intent(this, signin.class);
+            startActivity(intent);
+        //    finish();
+            return true;
+        }
+        return false;
     }
 }
